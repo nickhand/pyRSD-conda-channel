@@ -1,2 +1,2 @@
 # pyRSD-conda-channel
-conda recipes for pyRSD
+The conda recipes for [pyRSD](https://github.com/nickhand/pyRSD) live here.
