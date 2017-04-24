@@ -69,8 +69,8 @@ script:
       fi
 
     # make the recipes
-    - cd conda-recipes
     - PYRSD_VERSION=$(python extrude_recipes)
+    - echo $PYRSD_VERSION
 
     # build dependencies
     - if [[ -d recipes ]]; then conda build-all recipes/depends --matrix-conditions "python $PYTHON_BUILD_RESTRICTIONS" "$NUMPY_BUILD_RESTRICTION" --inspect-channels nickhand $UPLOAD; fi
@@ -87,6 +87,9 @@ script:
       fi
 
     # upload
+    - ls $CONDA_INSTALL_LOCN/conda-bld/$CONDA_OS/
+    - ls $CONDA_INSTALL_LOCN/conda-bld/$CONDA_OS/pyrsd-$PYRSD_VERSION*
+    - echo $BINSTAR_TOKEN
     - for f in $CONDA_INSTALL_LOCN/conda-bld/$CONDA_OS/pyrsd-$PYRSD_VERSION*; do
           anaconda -t $BINSTAR_TOKEN upload $f --force;
       done
