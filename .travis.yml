@@ -13,7 +13,7 @@ env:
         - CONDA_INSTALL_LOCN="${HOME}/miniconda"
 
         # Defines BINSTAR_TOKEN for your binstar channel
-        - secure: "XZMjbSNM6UcnoRqVjzvxdNRAQ3W5b8Od8nlitg8mnxkF+Q+Oc4Kk+unRmKLABaDkHypK75I7CBpC8Y/FlLSwb1hQVz657NkWFhoGE/2OzddeZ22OagMy6w4Gg6xe299+aQqZozgcimcQMokTwzsUizl0CkSvFQMat7JvxAvz2B469egEU+p/zZXQUhULPFTrm3IsuJEeLI+7Kzu+3/jaWiE9viJtbzNgGRE6/MJG3gDAigidjUJ6JtMyItSTAv4haxHVmFy4y0paP6kIkWyRtt7URoueiauYO4ZaxCHfoIVcAU38+rZm773lWB/IPpTstPdSbH937lGgjNU7b8/iW3AGFX5MWu3z0qy9HQPRZK17VnsI2x9V/0AFemo9LloL3odIgaVCSEblvxrQXmaiQovvSFF8LqSCfLRrCi/X7JGzHA8WR73pPQopSg5mZ1QfU7buZ3p5AUvHNi/eJVHy3zjQrFp103Lu7m8lVf6yacPPBUFAkX1C3NMA8mO4Lu8CFtgPQ/UNLO7aKSp5VGnv3tAuKODbj6aJssaEz3Qp0YTxPcMoalSJ28QyW6p1mY1gJ0xDrXyXv4yj7NQMWaQ1SwvMPf+bmhZe24sPihR+lNkI4Dr6eXyGKEF7tI0xFy6+IFwNfMzJRu5atxNqnIG3VJq9/s+B+Li55zyxRnXD7wc="
+        - secure: "MmbSlIIWP12Hdkob5JjPAPAxbrFZEGNr4Oa9H6IFG4fC6A6Igz4GCqWAOeMkx6Teg4RGp1xeDHPr+4Zvk9mw0JdF8p1AGgReUZE3bj61Grj+e5bVgGeVoCTSAh8yenss02x4T73d5VmiVYL83rGZELX2JQ+sE4c7krElJio6t8bnXL5PayWt1FTISvLC1FHmNflT8y4LidYAJp7T8Fii0ASjOxEk2wxzwMT6hc8s7DX169C5zrW1cDcHYHFIh03E17Gu4zPuxg87pcjMpO5fIqbo5DSZKkwSblphchB7X+FpWf7WVqnGxn/1GhAZQ2XN6tw6xEwFhLEL9L9MTi9c6tv3nEWwVF70C0fV6N+y2uROVRIiqaM40vbLB6B6H1tp53VX+cSfFUjD7g4bm/juguAj5xKT7KnmsMGXSsBwv3ixPwuiQPDQaWK8J+sAxVx5DRKpgUvk5HclakipCjLWHGWGcrhpLACIK+MF1mpVEjtGCvDEvFT6I9gk0Jrbf2Wqi7Z7tUOgyHj0l7zADgXq7Bvo1Ta37chn5xHxwJtVNYRrU6nzgiTMh2RZH6UdOkCiYJ96kC6WLNQjaCcNUaukOFjY94bgSr/R+l8tY5CCAfXUz3MEn4vOSh/OVARb/8Gv8TXXsXFU8cO8rHi8xXIIzVMXgp2ew6JEPoqlezzWKZY="
 
         # The python build restriction MUST be set at the moment, though it
         # can have any value. The setting below avoids known-bad builds on
@@ -87,9 +87,6 @@ script:
       fi
 
     # upload
-    - ls $CONDA_INSTALL_LOCN/conda-bld/$CONDA_OS/
-    - ls $CONDA_INSTALL_LOCN/conda-bld/$CONDA_OS/pyrsd-$PYRSD_VERSION*
-    - echo $BINSTAR_TOKEN
     - for f in $CONDA_INSTALL_LOCN/conda-bld/$CONDA_OS/pyrsd-$PYRSD_VERSION*; do
           anaconda -t $BINSTAR_TOKEN upload $f --force;
       done
