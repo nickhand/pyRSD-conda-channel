@@ -79,7 +79,7 @@ if __name__ == '__main__':
                      not d.startswith('.')]
         for template in templates:
 
-            if p in ['fftw', 'eigen3']:
+            if p in ['fftw', 'eigen3', 'autograd']:
                 shutil.copy(os.path.join(template_path, template), os.path.join(recipe_path, template))
             elif p == 'george':
 
