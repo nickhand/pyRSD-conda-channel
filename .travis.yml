@@ -76,7 +76,7 @@ script:
     - if [[ -d recipes ]]; then conda build-all recipes/depends --matrix-conditions "python $PYTHON_BUILD_RESTRICTIONS" "$NUMPY_BUILD_RESTRICTION" --inspect-channels nickhand $UPLOAD; fi
 
     # build pyRSD
-    - for PYTHON in "2.7" "3.5"; do
+    - for PYTHON in "2.7" "3.5" "3.6"; do
         conda build --python $PYTHON recipes/pyRSD;
       done
 
