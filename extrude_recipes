@@ -63,7 +63,7 @@ if __name__ == '__main__':
     if not os.path.exists(RECIPE_FOLDER):
         os.mkdir(RECIPE_FOLDER)
 
-    for p in ['eigen3', 'fftw', 'george', 'pyRSD']:
+    for p in ['autograd', 'eigen3', 'fftw', 'george', 'pyRSD']:
 
         if p == 'pyRSD':
             recipe_path = os.path.join(RECIPE_FOLDER, p)
