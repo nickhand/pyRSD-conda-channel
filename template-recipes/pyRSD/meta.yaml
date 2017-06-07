@@ -7,7 +7,7 @@ source:
 
 build:
   number: 0
-  script: 
+  script:
       - python setup.py install --single-version-externally-managed --record=record.txt
 
 requirements:
@@ -38,6 +38,7 @@ requirements:
   - six
   - lmfit >=0.9
   - autograd
+  - astropy
 
 test:
   imports:
