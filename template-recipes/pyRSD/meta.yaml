@@ -24,7 +24,7 @@ requirements:
   - python
   - libgcc
   - fftw
-  - gsl
+  - gsl >=2.2.1
   - numpy
   - pandas
   - scipy
