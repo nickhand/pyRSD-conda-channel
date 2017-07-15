@@ -23,7 +23,7 @@ env:
 
         # The value below needs to be set but will be ignored.
         - CONDA_NPY="1.11"
-        - CONDA_VERSION=4.3*
+        - CONDA_VERSION=4.2*
 
 # Matrix is fully specified (for now) by os versions
 
@@ -35,6 +35,9 @@ install:
     - export PATH=${CONDA_INSTALL_LOCN}/bin:$PATH
     - conda config --set always_yes true
 
+    - PIN_FILE_CONDA=${CONDA_INSTALL_LOCN}/conda-meta/pinned
+    - echo "conda ${CONDA_VERSION}" > $PIN_FILE_CONDA
+
     # update to latest conda always
     - conda update --quiet conda
 
@@ -42,16 +45,17 @@ install:
     - conda config --prepend channels nickhand
     - conda config --append channels bccp
     - conda config --append channels conda-forge
+    - conda config --prepend channels defaults
 
     # Install a couple of dependencies we need for sure.
     - conda install --quiet --yes astropy anaconda-client=1.6.2 jinja2 cython pycrypto
     - conda install ruamel_yaml
 
     # latest conda build
-    - conda install conda-build
+    - conda install conda-build=2
 
     # Install conda-build-all
-    - conda install "conda-build-all>=1.0.4"
+    - conda install conda-build-all=1.0.2
 
     # To ease debugging, list installed packages
     - conda info -a
