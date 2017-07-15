@@ -19,10 +19,10 @@ env:
         # can have any value. The setting below avoids known-bad builds on
         # python 2.6 and 3.3 for some packages.
         - PYTHON_BUILD_RESTRICTIONS="2.7*|>=3.5"
-        - NUMPY_BUILD_RESTRICTION="numpy >=1.11*"
+        - NUMPY_BUILD_RESTRICTION="numpy >=1.12*"
 
         # The value below needs to be set but will be ignored.
-        - CONDA_NPY="1.11"
+        - CONDA_NPY="1.12"
         - CONDA_VERSION=4.3*
 
 # Matrix is fully specified (for now) by os versions
@@ -71,10 +71,10 @@ script:
     - echo $PYRSD_VERSION
 
     # build dependencies
-    - if [[ -d recipes ]]; then conda build-all recipes/depends --matrix-max-n-minor-versions 3 --matrix-conditions "python $PYTHON_BUILD_RESTRICTIONS" "$NUMPY_BUILD_RESTRICTION" --inspect-channels nickhand $UPLOAD; fi
+    - if [[ -d recipes ]]; then conda build-all recipes/depends --matrix-conditions "python $PYTHON_BUILD_RESTRICTIONS" "$NUMPY_BUILD_RESTRICTION" --inspect-channels nickhand $UPLOAD; fi
 
     # build pyRSD
-    - if [[ -d recipes ]]; then conda build-all recipes/pyRSD --matrix-max-n-minor-versions 3 --matrix-conditions "python $PYTHON_BUILD_RESTRICTIONS" "$NUMPY_BUILD_RESTRICTION" --inspect-channels nickhand $UPLOAD; fi
+    - if [[ -d recipes ]]; then conda build-all recipes/pyRSD --matrix-conditions "python $PYTHON_BUILD_RESTRICTIONS" "$NUMPY_BUILD_RESTRICTION" --inspect-channels nickhand $UPLOAD; fi
 
 after_success:
     # build the documentation
