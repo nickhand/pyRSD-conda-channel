@@ -8,6 +8,9 @@ source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   md5: {{ md5}}
+  patches:
+    # Applies a patch to fix gcc v4.8 compatibility issue.
+    - gcc-4.8.diff
 
 build:
   number : 0
@@ -16,24 +19,19 @@ requirements:
   build:
     - python
     - setuptools
-    - eigen3
-    - numpy
+    - toolchain
     - pybind11
+    - numpy x.x
 
   run:
     - python
     - setuptools
-    - eigen3
-    - numpy
+    - numpy x.x
     - scipy
-    - pybind11
 
 test:
-  requires:
-    - nose
   imports:
     - george
-    - george.testing
 
 about:
   home: https://github.com/dfm/george
