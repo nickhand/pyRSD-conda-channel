@@ -18,6 +18,7 @@ requirements:
     - setuptools
     - eigen3
     - numpy
+    - pybind11
 
   run:
     - python
@@ -25,6 +26,7 @@ requirements:
     - eigen3
     - numpy
     - scipy
+    - pybind11
 
 test:
   requires:
@@ -37,4 +39,3 @@ about:
   home: https://github.com/dfm/george
   license:  MIT License
   summary: 'Blazingly fast Gaussian Processes for regression.'
-

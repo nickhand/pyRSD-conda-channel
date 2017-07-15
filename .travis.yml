@@ -52,7 +52,8 @@ install:
 
     # so we can grab compiled packages for dependencies
     - conda config --prepend channels nickhand
-    - conda config --add channels bccp
+    - conda config --append channels bccp
+    - conda config --append channgels conda-forge
 
     # so we can grab compiled packages for dependencies
     - conda config --add channels astropy
