@@ -13,7 +13,7 @@ source:
     - gcc-4.8.diff
 
 build:
-  number : 0
+  number : 1
   script:
     - which gcc
     - gcc --version
@@ -34,6 +34,7 @@ requirements:
     - numpy x.x
     - scipy
     - libgcc
+    - pybind11
 
 test:
   imports:
