@@ -46,6 +46,7 @@ install:
     - conda config --append channels bccp
     - conda config --append channels astropy
     - conda config --prepend channels defaults
+    - conda config --append channels conda-forge
 
     # Install a couple of dependencies we need for sure.
     - conda install --quiet --yes astropy anaconda-client=1.6.2 jinja2 cython pycrypto
