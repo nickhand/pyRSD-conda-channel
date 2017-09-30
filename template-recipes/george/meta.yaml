@@ -33,7 +33,6 @@ requirements:
     - setuptools
     - numpy x.x
     - scipy
-    - libgcc
     - pybind11
 
 test:
