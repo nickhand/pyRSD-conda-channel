@@ -1,0 +1,24 @@
+{% set name = "eigen3" %}
+
+package:
+  name: {{ name }}
+  version: "{{ version }}"
+
+source:
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: http://bitbucket.org/eigen/eigen/get/{{ version }}.tar.gz
+  sha1: 96709ff139c80861e7b2cf65a9dfca8a8cc46eeb
+
+requirements:
+  build:
+    - cmake
+    - gcc
+
+test:
+  files:
+    - test.cc
+
+about:
+  home: http://eigen.tuxfamily.org/
+  license: MPL2
+  summary: 'C++ template library for linear algebra'

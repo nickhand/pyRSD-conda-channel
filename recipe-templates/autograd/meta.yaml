@@ -1,14 +1,13 @@
-{% set version = "1.1.9" %}
-{% set sha256 = "746aed6d825655fdb1e96d187362fe3ce096814fd2b561ebb792ae359c6d5535" %}
+{% set name = "autograd" %}
 
 package:
-  name: autograd
-  version: {{ version }}
+  name: {{ name|lower }}
+  version: "{{version}}"
 
 source:
-  fn: autograd-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/a/autograd/autograd-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  md5: {{ md5 }}
 
 build:
   number: 0

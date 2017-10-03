@@ -1,0 +1,13 @@
+- name: autograd
+
+- name: eigen3
+  version: 3.2.1
+
+- name: fftw
+  version: 3.3.5
+  
+- name: george
+  past_versions: [0.2.1]
+
+- name: pyrsd
+  pypi_name: pyRSD
