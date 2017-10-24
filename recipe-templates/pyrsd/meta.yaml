@@ -42,6 +42,7 @@ requirements:
   - lmfit >=0.9
   - autograd
   - astropy
+  - xarray
 
 test:
   imports:
