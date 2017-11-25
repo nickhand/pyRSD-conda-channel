@@ -1,10 +1,7 @@
 - name: mpi4py-cray
   pypi_name: mpi4py
-  
-- name: autograd
 
-- name: eigen3
-  version: 3.2.1
+- name: autograd
 
 - name: fftw
   version: 3.3.5
