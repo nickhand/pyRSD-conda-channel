@@ -30,6 +30,9 @@ BUILD_FLAG="--skip-existing"
 
 ENVNAME=$PYTHON-$NERSC_HOST
 
+# get the bundle-anaconda command
+source /usr/common/contrib/bccp/python-mpi-bcast/activate.sh
+
 # activate our root anaconda install to start
 source $TAR_DIR/anaconda3/bin/activate root
 
@@ -56,7 +59,7 @@ build_mpi4py ()
 {
     local PYTHON=$1
     pushd $RECIPE_DIR
-    conda build --python $PYTHON --skip-existing mpi4py-cray* ||
+    conda build --python $PYTHON  mpi4py-cray* ||
     { echo "conda build of mpi4py-cray failed"; exit 1; }
     popd
 }
