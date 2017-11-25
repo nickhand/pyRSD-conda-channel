@@ -56,7 +56,7 @@ build_mpi4py ()
 {
     local PYTHON=$1
     pushd $RECIPE_DIR
-    conda build --python $PYTHON mpi4py-cray* ||
+    conda build --python $PYTHON --skip-existing mpi4py-cray* ||
     { echo "conda build of mpi4py-cray failed"; exit 1; }
     popd
 }
@@ -69,7 +69,7 @@ build ()
     for f in $BUILD_ORDER; do
         echo Building for $f
         if [ $f != mpi4py-cray* ]; then
-            conda build --python $PYTHON $BUILD_FLAG $f ||
+            conda build --python $PYTHON --numpy 1.13  $BUILD_FLAG $f ||
             { echo "command 'conda build --python ${PYTHON} ${BUILD_FLAG} ${f}' failed"; exit 1; }
         fi
     done
