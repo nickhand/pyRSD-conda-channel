@@ -10,7 +10,8 @@ else
 fi
 
 # the PYTHON version to build
-PYTHON=3.6
+PYTHON=$1
+shift
 
 _DIRNAME=`dirname ${_SCRIPT_LOCATION}`
 _DIRNAME=`readlink -f $_DIRNAME`
@@ -21,10 +22,16 @@ pushd $_DIRNAME
 INSTALL_FLAG=""
 BUILD_FLAG="--skip-existing"
 
-ENVNAME=$PYTHON
+ENVNAME=$PYTHON-$NERSC_HOST
 
 # activate our root anaconda install to start
-source activate dev
+source $TAR_DIR/anaconda3/bin/activate root
+
+# purge intermediate results
+conda build purge
+
+# keep conda and conda-build up to date
+conda update --yes conda conda-build
 
 # directory where recipes will be written
 RECIPE_DIR=recipes-$ENVNAME
@@ -69,6 +76,7 @@ install ()
     pushd recipe-templates
 
     # install packages into this python version's environment
+    source activate $ENVNAME
     conda uninstall --yes mpich2
     conda install $INSTALL_FLAG --use-local --yes * ||
     { echo "conda install of packages failed"; exit 1; }
@@ -77,7 +85,7 @@ install ()
     popd
 
     # and tar the install
-    bundle-anaconda $TAR_DIR/$NERSC_HOST/pyrsd-anaconda-$PYTHON.tar.gz $CONDA_PREFIX ||
+    bundle-anaconda $TAR_DIR/anaconda3/envs/pyrsd-anaconda-$ENVNAME.tar.gz $CONDA_PREFIX ||
     { echo "bundle-anaconda failed"; exit 1; }
 }
 
