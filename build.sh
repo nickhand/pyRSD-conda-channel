@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# only one argument allowed
+if [ $# -eq 0 ] || [ $# -gt 2 ] || [ $# -eq 2 ] && [ "$2" != "--clean" ]; then
+    echo "usage: build.sh PYTHON [--clean]"
+    exit 1
+fi
+
 if [[ -n $BASH_VERSION ]]; then
     _SCRIPT_LOCATION=${BASH_SOURCE[0]}
 elif [[ -n $ZSH_VERSION ]]; then
