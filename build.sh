@@ -94,7 +94,7 @@ install ()
     popd
 
     # and tar the install
-    bundle-anaconda $TAR_DIR/anaconda3/envs/pyrsd-anaconda-$ENVNAME.tar.gz $CONDA_PREFIX ||
+    $TAR_DIR/tar-anaconda.sh $TAR_DIR/anaconda3/envs/pyrsd-anaconda-$ENVNAME.tar.gz $CONDA_PREFIX ||
     { echo "bundle-anaconda failed"; exit 1; }
 }
 
