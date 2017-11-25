@@ -11,6 +11,7 @@ source:
 build:
   number: 0
   script:
+      - source /usr/common/contrib/bccp/conda-channel-bccp/nersc_profile.sh
       - python setup.py install --single-version-externally-managed --record=record.txt
 
 requirements:
@@ -34,7 +35,7 @@ requirements:
   - george
   - scikit-learn >=0.17
   - emcee
-  - mpi4py
+  - mpi4py-cray
   - matplotlib
   - seaborn
   - corner

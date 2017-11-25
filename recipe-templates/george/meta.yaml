@@ -15,6 +15,7 @@ source:
 build:
   number : 3
   script:
+    - source /usr/common/contrib/bccp/conda-channel-bccp/nersc_profile.sh
     - which gcc
     - gcc --version
     - python setup.py install --single-version-externally-managed --record record.txt
