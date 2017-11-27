@@ -28,13 +28,11 @@ pushd $_DIRNAME
 INSTALL_FLAG=""
 BUILD_FLAG="--skip-existing"
 
-ENVNAME=$PYTHON-$NERSC_HOST
-
 # get the bundle-anaconda command
 source /usr/common/contrib/bccp/python-mpi-bcast/activate.sh
 
 # activate our root anaconda install to start
-source $TAR_DIR/anaconda3/bin/activate root
+source $LOCALSTACK/anaconda3/bin/activate root
 
 # purge intermediate results
 conda build purge
@@ -43,7 +41,7 @@ conda build purge
 conda update --yes conda conda-build
 
 # directory where recipes will be written
-RECIPE_DIR=recipes-$ENVNAME
+RECIPE_DIR=recipes
 
 # make the recipes
 python extrude_recipes requirements.yml --recipe-dir $RECIPE_DIR || { echo "extrude_recipes failed"; exit 1; }
@@ -81,11 +79,9 @@ build ()
 
 install ()
 {
-    local PYTHON=$1
     pushd recipe-templates
 
     # install packages into this python version's environment
-    source activate $ENVNAME
     conda uninstall --yes mpich2
     conda install $INSTALL_FLAG --use-local --yes * ||
     { echo "conda install of packages failed"; exit 1; }
@@ -94,7 +90,7 @@ install ()
     popd
 
     # and tar the install
-    bash $TAR_DIR/tar-anaconda.sh $TAR_DIR/anaconda3/envs/pyrsd-anaconda-$ENVNAME.tar.gz $CONDA_PREFIX ||
+    bash $LOCALSTACK/tar-anaconda.sh $LOCALSTACK/anaconda3/envs/pyrsd-anaconda-$PYTHON-$NERSC_HOST.tar.gz $CONDA_PREFIX ||
     { echo "bundle-anaconda failed"; exit 1; }
 }
 
@@ -105,6 +101,6 @@ build_mpi4py $PYTHON
 build $PYTHON
 
 # install
-install $ENVNAME
+install
 
 popd # return to start directory
