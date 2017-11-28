@@ -32,7 +32,7 @@ BUILD_FLAG="--skip-existing"
 source /usr/common/contrib/bccp/python-mpi-bcast/activate.sh
 
 # activate our root anaconda install to start
-source $LOCALSTACK/anaconda3/bin/activate root
+source $LOCAL_STACK/anaconda3/bin/activate root
 
 # purge intermediate results
 conda build purge
@@ -90,7 +90,7 @@ install ()
     popd
 
     # and tar the install
-    bash $LOCALSTACK/tar-anaconda.sh $LOCALSTACK/anaconda3/envs/pyrsd-anaconda-$PYTHON-$NERSC_HOST.tar.gz $CONDA_PREFIX ||
+    bash $LOCAL_STACK/tar-anaconda.sh $LOCAL_STACK/anaconda3/envs/pyrsd-anaconda-$PYTHON-$NERSC_HOST.tar.gz $CONDA_PREFIX ||
     { echo "bundle-anaconda failed"; exit 1; }
 }
 
