@@ -14,7 +14,8 @@ build:
   script: python setup.py install --single-version-externally-managed --record record.txt
 
 requirements:
-  build:
+
+  host:
     - python
     - setuptools
     - numpy >=1.10
@@ -23,7 +24,7 @@ requirements:
 
   run:
     - python
-    - numpy >=1.10
+    - '{{ pin_compatible("numpy") }}'
     - future >=0.15.2
     - scipy >=0.17
 

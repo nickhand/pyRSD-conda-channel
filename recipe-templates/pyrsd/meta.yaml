@@ -10,39 +10,41 @@ source:
 
 build:
   number: 0
-  script:
-      - python setup.py install --single-version-externally-managed --record=record.txt
 
 requirements:
+
   build:
-  - python
-  - numpy x.x
-  - setuptools
-  - gcc
-  - gsl >=2.2.1
-  - fftw
-  - swig
+    - '{{ compiler("c") }}'
+    - '{{ compiler("cxx") }}'
+    - '{{ compiler("fortran") }}'
+
+  host:
+    - python
+    - numpy
+    - setuptools
+    - gsl >=2.2.1
+    - fftw
+    - swig
 
   run:
-  - python
-  - libgcc
-  - fftw
-  - gsl >=2.2.1
-  - numpy x.x
-  - pandas
-  - scipy
-  - george
-  - scikit-learn >=0.17
-  - emcee
-  - mpi4py
-  - matplotlib
-  - seaborn
-  - corner
-  - six
-  - lmfit >=0.9
-  - autograd
-  - astropy
-  - xarray
+    - python
+    - fftw
+    - gsl >=2.2.1
+    - '{{ pin_compatible("numpy") }}'
+    - pandas
+    - scipy
+    - george >=0.3
+    - scikit-learn >=0.17
+    - emcee
+    - mpi4py
+    - matplotlib
+    - seaborn
+    - corner
+    - six
+    - lmfit >=0.9
+    - autograd
+    - astropy
+    - xarray
 
 test:
   imports:

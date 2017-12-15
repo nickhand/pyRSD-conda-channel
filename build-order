@@ -1,0 +1,5 @@
+recipes/autograd-*
+recipes/george-*
+recipes/eigen3-*
+recipes/fftw-*
+recipes/pyrsd-*
