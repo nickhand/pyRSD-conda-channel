@@ -8,9 +8,6 @@ from pkg_resources import parse_version
 import requests
 
 import ruamel_yaml as yaml
-
-from conda import config
-
 from six.moves import xmlrpc_client as xmlrpclib
 
 from jinja2 import Environment, FileSystemLoader, Template
@@ -19,7 +16,6 @@ from jinja2.exceptions import TemplateNotFound
 PYPI_XMLRPC = 'https://pypi.python.org/pypi'
 TEMPLATE_FOLDER = 'recipe-templates'
 RECIPE_FOLDER = 'recipes'
-ALL_PLATFORMS = ['osx-64', 'linux-64', 'linux-32', 'win-32', 'win-64']
 
 CONDA_FORGE_RECIPE_BASE = 'https://raw.githubusercontent.com/conda-forge/{}-feedstock/master/recipe/meta.yaml'
 
@@ -64,7 +60,6 @@ class Package(object):
         self._url = None
         self._md5 = None
         self._version = None
-        self._build_platforms = None
         self._extra_meta = None
         self._build_pythons = None
         self._pypi_name = pypi_name
@@ -164,35 +159,6 @@ class Package(object):
         return self.url.split('/')[-1]
 
     @property
-    def build_platforms(self):
-        """
-        Return list of platforms on which this package can be built.
-
-        Defaults to the value of ``ALL_PLATFORMS``.
-
-        Checks for build information by looking at recipe *templates*, which
-        is probably not really the way to go...might be more generalizable if
-        it looked at recipes instead.
-
-        Also excludes any platforms indicated in requirements.yml,
-        """
-        # Lazy memoization...
-        if self._build_platforms:
-            return self._build_platforms
-
-        platform_info = self.extra_meta
-
-        try:
-            platforms = platform_info['extra']['platforms']
-        except KeyError:
-            platforms = ALL_PLATFORMS
-
-        platforms = list(set(platforms) - set(self._excluded_platforms))
-
-        self._build_platforms = platforms
-        return self._build_platforms
-
-    @property
     def build_pythons(self):
         if self._build_pythons:
             return self._build_pythons
@@ -257,16 +223,6 @@ class Package(object):
         self._url = url
         self._md5 = md5sum
         self._version = version
-
-
-    @property
-    def supported_platform(self):
-        """
-        True if the current build platform is supported by the package, False
-        otherwise.
-        """
-        return config.subdir in self.build_platforms
-
 
 def get_package_versions(requirements_path):
     """
@@ -388,9 +344,6 @@ def main(args=None):
         template_dir = args.template_dir
 
     packages = get_package_versions(args.requirements)
-
-    packages = [p for p in packages if p.supported_platform]
-
     try:
         needs_recipe = os.listdir(template_dir)
     except OSError:
