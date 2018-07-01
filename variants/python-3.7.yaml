@@ -2,7 +2,7 @@ numpy:
   - 1.14 # [unix]
 
 python:
-  - 3.5
+  - 3.7
 
 mpi:
   - openmpi  # [osx]
