@@ -1,9 +1,0 @@
-numpy:
-  - 1.14 # [unix]
-
-python:
-  - 3.7
-
-mpi:
-  - openmpi  # [osx]
-  - mpich  #   [linux]
