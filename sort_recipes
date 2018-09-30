@@ -130,7 +130,8 @@ def main(args=None):
 
         with smart_open(args.output) as ff:
             for recipe in recipes:
-                ff.write("%s\n" %recipe)
+                if 'pyrsd' in recipe:
+                    ff.write("%s\n" %recipe)
 
 if __name__ == '__main__':
     main()
