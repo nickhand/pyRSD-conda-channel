@@ -14,6 +14,7 @@ build:
       - source /global/project/projectdirs/m779/nhand/Programs/source/pyRSD-conda-channel/nersc_profile.sh
       - export CC=gcc; export CXX=g++;
       - export LDFLAGS=-lgslcblas
+      - export CFGLAGS=-fPIC
       - python setup.py install --single-version-externally-managed --record=record.txt
 
 requirements:
