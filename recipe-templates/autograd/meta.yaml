@@ -12,7 +12,7 @@ source:
 build:
   number: 0
   script:
-    - source /usr/common/contrib/bccp/conda-channel-bccp/nersc_profile.sh
+    - source $PROGRAMS_DIR/source/pyRSD-conda-channel/nersc_profile.sh
     - python setup.py install --single-version-externally-managed --record record.txt
 
 requirements:
