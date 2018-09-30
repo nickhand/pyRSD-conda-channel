@@ -15,7 +15,7 @@ source:
 build:
   number : 3
   script:
-    - source $PROGRAMS_DIR/source/pyRSD-conda-channel/nersc_profile.sh
+    - source /global/project/projectdirs/m779/nhand/Programs/source/pyRSD-conda-channel/nersc_profile.sh
     - which gcc
     - gcc --version
     - python setup.py install --single-version-externally-managed --record record.txt

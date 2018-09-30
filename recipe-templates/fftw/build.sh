@@ -1,4 +1,4 @@
-source $PROGRAMS_DIR/source/pyRSD-conda-channel/nersc_profile.sh
+source /global/project/projectdirs/m779/nhand/Programs/source/pyRSD-conda-channel/nersc_profile.sh
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     ./configure --prefix=$PREFIX --enable-shared --disable-fortran --disable-static \
