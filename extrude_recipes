@@ -8,9 +8,6 @@ import shutil
 import requests
 from pkg_resources import parse_version
 import ruamel_yaml as yaml
-
-from conda import config
-
 from six.moves import xmlrpc_client as xmlrpclib
 
 from jinja2 import Environment, FileSystemLoader, Template
@@ -22,6 +19,7 @@ RECIPE_FOLDER = 'recipes'
 ALL_PLATFORMS = ['osx-64', 'linux-64', 'linux-32', 'win-32', 'win-64']
 
 CONDA_FORGE_RECIPE_BASE = 'https://raw.githubusercontent.com/conda-forge/{}-feedstock/master/recipe/meta.yaml'
+
 
 def get_pypi_info(name):
     url = "https://pypi.python.org/pypi/{}/json".format(name)
@@ -251,21 +249,12 @@ class Package(object):
             # Apparently a pypi release isn't required to have any source?
             # If it doesn't, then return None
             print('No source found for {}: {}'.format(self.pypi_name,
-                  self.required_version))
+                                                      self.required_version))
             url = None
             md5sum = None
         self._url = url
         self._md5 = md5sum
         self._version = version
-
-
-    @property
-    def supported_platform(self):
-        """
-        True if the current build platform is supported by the package, False
-        otherwise.
-        """
-        return config.subdir in self.build_platforms
 
 
 def get_package_versions(requirements_path):
@@ -302,7 +291,7 @@ def get_package_versions(requirements_path):
         version = p.get('version', None)
         if version is None:
             releases = get_pypi_info(pypi_name)
-            versions = [releases[0]] # build the latest from pypi
+            versions = [releases[0]]  # build the latest from pypi
             past_versions = p.get('past_versions', [])
             for past_ver in past_versions:
                 if past_ver not in versions:
@@ -310,21 +299,21 @@ def get_package_versions(requirements_path):
         else:
             versions = [version]
 
-
         # TODO: Get supported platforms from requirements,
         #       not from recipe template.
         for version in versions:
             packages.append(Package(p['name'],
-                                pypi_name=pypi_name,
-                                version=version,
-                                setup_options=helpers,
-                                numpy_compiled_extensions=numpy_extensions,
-                                python_requirements=python_requirements,
-                                numpy_requirements=numpy_requirements,
-                                excluded_platforms=excluded_platforms,
-                                include_extras=include_extras))
+                                    pypi_name=pypi_name,
+                                    version=version,
+                                    setup_options=helpers,
+                                    numpy_compiled_extensions=numpy_extensions,
+                                    python_requirements=python_requirements,
+                                    numpy_requirements=numpy_requirements,
+                                    excluded_platforms=excluded_platforms,
+                                    include_extras=include_extras))
 
     return packages
+
 
 def render_template(package, template, folder=TEMPLATE_FOLDER):
     """
@@ -386,14 +375,13 @@ def main(args=None):
                             help="Path the folder of recipe templates, if "
                                  "any. Default: '{}'".format(TEMPLATE_FOLDER))
         parser.add_argument('--recipe-dir', default=RECIPE_FOLDER,
-                            help="the path to write recipes too. Default: '%s'" %RECIPE_FOLDER)
+                            help="the path to write recipes too. Default: '%s'" % RECIPE_FOLDER)
         args = parser.parse_args()
         template_dir = args.template_dir
         recipe_folder = args.recipe_dir
 
     packages = get_package_versions(args.requirements)
-
-    packages = [p for p in packages if p.supported_platform]
+    packages = [p for p in packages]
 
     try:
         needs_recipe = os.listdir(template_dir)
@@ -424,22 +412,26 @@ def main(args=None):
                      not d.startswith('.')]
 
         # render the meta data
-        meta_path = os.path.join(template_path, 'meta-%s.yaml' %p.version)
+        meta_path = os.path.join(template_path, 'meta-%s.yaml' % p.version)
         if not os.path.exists(meta_path):
             meta_path = os.path.join(template_path, 'meta.yaml')
         if not os.path.exists(meta_path):
-            raise ValueError("no meta.yaml found for package '%s'" %p.conda_name)
+            raise ValueError(
+                "no meta.yaml found for package '%s'" % p.conda_name)
 
-        rendered = render_template(p, os.path.split(meta_path)[-1], folder=template_dir)
+        rendered = render_template(p, os.path.split(
+            meta_path)[-1], folder=template_dir)
         with open(os.path.join(recipe_path, 'meta.yaml'), 'wt') as f:
             f.write(rendered)
 
         for template in templates:
-            if 'meta' in template: continue
+            if 'meta' in template:
+                continue
             rendered = render_template(p, template, folder=template_dir)
             with open(os.path.join(recipe_path, template), 'wt') as f:
                 f.write(rendered)
         inject_requirements(p, recipe_path)
+
 
 if __name__ == '__main__':
     main()
