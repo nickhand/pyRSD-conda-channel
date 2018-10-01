@@ -43,7 +43,7 @@ requirements:
     - seaborn
     - corner
     - six
-    - lmfit >=0.9
+    - lmfit =0.9.7
     - autograd
     - astropy
     - xarray
